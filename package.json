@@ -1,4 +1,3 @@
-```json
 {
 "name": "karaoke-app",
 "version": "1.0.0",
@@ -11,4 +10,4 @@
 "express": "^4.18.2"
 }
 }
-```
+
