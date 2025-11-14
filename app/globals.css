@@ -1,0 +1,17 @@
+body {
+  background: #fafafa;
+}
+input {
+  padding: 8px;
+  margin: 5px 0;
+}
+button {
+  padding: 10px;
+  background: #222;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.8;
+}
