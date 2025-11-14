@@ -1,0 +1,55 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Karaokê - Envie sua Música</title>
+<style>
+body { font-family: Arial; padding: 20px; background: #f6f6f6; }
+.box {
+background: white;
+padding: 20px;
+max-width: 400px;
+margin: auto;
+border-radius: 12px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+input, button {
+width: 100%; padding: 12px; margin-top: 10px;
+border-radius: 8px; border: 1px solid #ccc;
+font-size: 16px;
+}
+button { background: #ff4d4d; color: white; cursor: pointer; }
+</style>
+</head>
+<body>
+
+
+<div class="box">
+<h2>🎤 Envie sua Música</h2>
+<form id="f">
+<input name="nome" placeholder="Seu nome" required>
+<input name="musica" placeholder="Música" required>
+<input name="artista" placeholder="Artista" required>
+<button type="submit">Enviar</button>
+</form>
+</div>
+
+
+<script>
+document.getElementById('f').onsubmit = async (e) => {
+e.preventDefault();
+const fd = new FormData(e.target);
+await fetch('/add', {
+method: 'POST',
+body: new URLSearchParams(fd)
+});
+alert('🎉 Música enviada para a fila!');
+e.target.reset();
+};
+</script>
+
+
+</body>
+</html>
+```
