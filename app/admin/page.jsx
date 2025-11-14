@@ -1,53 +1,45 @@
 "use client";
 import { useEffect, useState } from "react";
+import "../globals.css";
 
-export default function AdminPage() {
+export default function Admin() {
   const [songs, setSongs] = useState([]);
 
-  async function loadSongs() {
-    const res = await fetch("/api/songs");
-    const data = await res.json();
-    setSongs(data);
+  async function load() {
+    const r = await fetch("/api/songs");
+    setSongs(await r.json());
   }
 
-  async function removeSong(id) {
-    await fetch("/api/songs?id=" + id, { method: "DELETE" });
-    loadSongs();
+  async function remove(id) {
+    await fetch("/api/songs", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    });
+    load();
   }
 
   useEffect(() => {
-    loadSongs();
+    load();
+    const i = setInterval(load, 3000);
+    return () => clearInterval(i);
   }, []);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Lista de Músicas (Garçom)</h1>
-      {songs.length === 0 && <p>Nenhum pedido de música até agora.</p>}
-      <ul>
-        {songs.map((song) => (
-          <li key={song.id} style={{ marginBottom: 10 }}>
-            <strong>{song.name}</strong> — {song.music} ({song.author})
-            <button
-              onClick={() => removeSong(song.id)}
-              style={{
-                marginLeft: 10,
-                padding: "4px 10px",
-                background: "red",
-                color: "white",
-                border: "none",
-                borderRadius: 5,
-                cursor: "pointer",
-              }}
-            >
-              Remover
-            </button>
-          </li>
-        ))}
-      </ul>
+    <main>
+      <h1>Painel do Garçom 🍻</h1>
 
-      <button onClick={loadSongs} style={{ marginTop: 20, padding: 10 }}>
-        Atualizar Lista
-      </button>
-    </div>
+      {songs.length === 0 ? (
+        <p>Ninguém na fila ainda.</p>
+      ) : (
+        songs.map(item => (
+          <div key={item.id} style={{ background: "#fff", padding: 15, marginBottom: 10, borderRadius: 6 }}>
+            <p><strong>Nome:</strong> {item.name}</p>
+            <p><strong>Música:</strong> {item.song}</p>
+            <p><strong>Artista:</strong> {item.artist}</p>
+            <button onClick={() => remove(item.id)}>Remover</button>
+          </div>
+        ))
+      )}
+    </main>
   );
 }
