@@ -1,23 +1,22 @@
-let songs = [];
+let queue = [];
 
 export async function GET() {
-  return Response.json(songs);
+  return Response.json(queue);
 }
 
 export async function POST(req) {
   const body = await req.json();
-  const newSong = {
+  queue.push({
     id: Date.now(),
-    name: body.name,
-    music: body.music,
-    author: body.author,
-  };
-  songs.push(newSong);
-  return Response.json({ message: "OK" });
+    ...body
+  });
+
+  return Response.json({ ok: true });
 }
 
 export async function DELETE(req) {
-  const id = req.nextUrl.searchParams.get("id");
-  songs = songs.filter((s) => s.id != id);
-  return Response.json({ message: "REMOVED" });
+  const { id } = await req.json();
+  queue = queue.filter(item => item.id !== id);
+
+  return Response.json({ ok: true });
 }
