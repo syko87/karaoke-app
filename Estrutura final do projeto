@@ -1,0 +1,8 @@
+```
+karaoke-app/
+│
+├── server.js
+├── package.json
+├── index.html
+└── admin.html
+```
