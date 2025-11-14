@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import "./globals.css";
 
 export default function Home() {
   const [name, setName] = useState("");
@@ -22,16 +23,16 @@ export default function Home() {
   }
 
   return (
-    <main style={{ padding: 20, fontFamily: "sans-serif" }}>
-      <h1>Karaokê do Restaurante 🎤</h1>
-      <p>Preencha para entrar na fila!</p>
+    <main>
+      <h1>Karaokê 🎤</h1>
+      <p>Preencha para entrar na fila:</p>
 
       {!sent ? (
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", maxWidth: 300 }}>
+        <form onSubmit={handleSubmit} style={{ maxWidth: 300 }}>
           <input placeholder="Seu nome" value={name} onChange={e => setName(e.target.value)} required />
           <input placeholder="Música" value={song} onChange={e => setSong(e.target.value)} required />
           <input placeholder="Artista" value={artist} onChange={e => setArtist(e.target.value)} required />
-          <button type="submit" style={{ marginTop: 10 }}>Enviar</button>
+          <button type="submit">Enviar</button>
         </form>
       ) : (
         <p style={{ color: "green", fontWeight: "bold" }}>Pedido enviado! Aguarde ser chamado 🎤</p>
